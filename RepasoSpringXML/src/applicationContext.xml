@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-3.1.xsd
+">
+<context:property-placeholder location="classpath:data.properties"/>
+<!-- Singleton: varios objetos apuntan a muna misma dirección de memoria
+	 Prototype: Cada objeto apunta a una dirección de memoria diferente -->
+<!-- Creación de beans, inyeción de dependencias por constructor-->
+<bean id="creInf" class="inversionOfControl.Informe"></bean>
+<bean id="creEmp" class="inversionOfControl.Jefe" scope="singleton"
+ init-method="init" destroy-method="destroy">
+<constructor-arg ref="creInf"></constructor-arg>
+</bean>
+<!-- Creación de beans, inyeción de dependencias por setters-->
+<bean id="creDir" class="inversionOfControl.Director" scope="prototype">
+<property name="informe" ref="creInf"></property>
+<property name="email" value="${email}"></property>
+<property name="empresa" value="${nombreEmpresa}"></property>
+</bean>
+
+<!-- <bean id="creEmp" class="inversionOfControl.Director"> -->
+ 
+</beans>
